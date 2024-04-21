@@ -2,6 +2,8 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AddProduct from "./Components/AddProduct";
 import ViewProducts from "./Components/ViewProducts/ViewProducts";
+import AddCustomer from "./Components/AddCustomer";
+import ViewCustomers from "./Components/ViewCustomers/ViewCustomers";
 
 function App() {
   return (
@@ -17,10 +19,26 @@ function App() {
             }
           />
           <Route
+            path="/addcustomer"
+            element={
+              <>
+                <AddCustomer />
+              </>
+            }
+          />
+          <Route
             path="/viewproducts"
             element={
               <>
                 <ViewProducts />
+              </>
+            }
+          />
+          <Route
+            path="/viewcustomers"
+            element={
+              <>
+                <ViewCustomers />
               </>
             }
           />
