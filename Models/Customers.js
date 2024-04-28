@@ -9,7 +9,7 @@ const Customer = sequelize.define("Customer", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  phoneNumber: {
+  phonenumber: {
     type: DataTypes.STRING,
     allowNull: false,
   },

@@ -55,7 +55,7 @@ export default function AddCustomer() {
         border={"2px solid white"}
       >
         <form onSubmit={addCustomer}>
-          <FormLabel>First Name</FormLabel>
+          <FormLabel>Customer Name</FormLabel>
           <Input
             type="text"
             name="firstName"

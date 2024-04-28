@@ -4,7 +4,7 @@ import AddProduct from "./Components/AddProduct";
 import ViewProducts from "./Components/ViewProducts/ViewProducts";
 import AddCustomer from "./Components/AddCustomer";
 import ViewCustomers from "./Components/ViewCustomers/ViewCustomers";
-
+import EditProduct from "./Components/EditProduct";
 function App() {
   return (
     <>
@@ -39,6 +39,14 @@ function App() {
             element={
               <>
                 <ViewCustomers />
+              </>
+            }
+          />
+          <Route
+            path="/editproduct"
+            element={
+              <>
+                <EditProduct />
               </>
             }
           />

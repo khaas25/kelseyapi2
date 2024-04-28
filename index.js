@@ -34,7 +34,7 @@ app.post("/customers", async (req, res) => {
     res.status(200).send(addCustomer);
   } catch (error) {
     // res.status(500).send(error);
-     res.status(500).send({ error: error.message || error.stack });
+    res.status(500).send({ error: error.message || error.stack });
   }
 });
 // =================================================================
@@ -46,6 +46,53 @@ app.get("/customers", async (req, res) => {
     res.status(500).send(error);
   }
 });
+// ===================================================================
+app.get("/products/:id", async (req, res) => {
+  try {
+    var productId = req.params.id;
+    var product = await Product.findByPk(productId);
+    res.status(200).send(product);
+    if (!product) {
+      res.status(404).json("Data Not Found");
+    }
+  } catch {
+    res.status(500).send(error);
+  }
+});
+// ===================================================================
+app.delete("/products/:id", async (req, res) => {
+  try {
+    var productId = req.params.id;
+    var product = await Product.findByPk(productId);
+    if (!product) {
+      res.status(404).send("No product found");
+    }
+    await product.destroy();
+    res.status(200).send("Product was deleted");
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+// ===================================================================
+
+app.patch("/products/:id", async (req, res) => {
+  try {
+    var productId = req.params.id;
+    var product = await Product.findByIdPk(productId);
+
+    if (!product) {
+      res.status(404).send("No Product Found");
+    }
+    await product.update(req.body);
+    res.status(200).send(product);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+// ===================================================================
+// ===================================================================
+// ===================================================================
+// ===================================================================
 // ===================================================================
 
 app.listen(PORT, () => {

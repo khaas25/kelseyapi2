@@ -23,7 +23,7 @@
 .single-product h1 {
   font-size: 20px;
   margin-bottom: 10px;
-  color: #333;
+  color: white;
 }
 
 .single-product img {
@@ -41,7 +41,7 @@
 .single-product p#description {
   font-size: 14px;
   margin-bottom: 10px;
-  color: #666;
+  color: white;
 }
 
 .single-product p#price {
