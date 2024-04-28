@@ -20,7 +20,7 @@ export default function ViewProducts() {
     getData();
   }, [deleteSignal]);
 
-  //==================================================
+  //==============================================
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [product, setProduct] = useState({});
   const openModal = async (id) => {
