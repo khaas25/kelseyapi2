@@ -6,16 +6,19 @@ import CustomModal from "../Modal/Modal";
 import { useDisclosure } from "@chakra-ui/react";
 
 export default function ViewProducts() {
-  var [products, setProducts] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [deleteSignal, setDeleteSignal] = useState("");
+
   useEffect(() => {
     async function getData() {
       var response = await fetch(`http://localhost:8080/products`);
       var data = await response.json();
       setProducts(data);
+      setDeleteSignal("");
       console.log(data);
     }
     getData();
-  }, []);
+  }, [deleteSignal]);
 
   //==================================================
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -44,6 +47,7 @@ export default function ViewProducts() {
         onOpen={onOpen}
         product={product}
         isOpen={isOpen}
+        setDeleteSignal={setDeleteSignal}
       />
     </div>
   );

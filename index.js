@@ -78,7 +78,7 @@ app.delete("/products/:id", async (req, res) => {
 app.patch("/products/:id", async (req, res) => {
   try {
     var productId = req.params.id;
-    var product = await Product.findByIdPk(productId);
+    var product = await Product.findByPk(productId);
 
     if (!product) {
       res.status(404).send("No Product Found");

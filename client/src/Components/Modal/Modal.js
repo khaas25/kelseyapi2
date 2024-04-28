@@ -31,6 +31,7 @@ export default function CustomModal(props) {
           duration: 9000,
           isClosable: true,
         });
+        props.setDeleteSignal("deleted");
         props.onClose();
       })
       .catch((e) => {
@@ -57,7 +58,7 @@ export default function CustomModal(props) {
           <ModalCloseButton />
           <ModalBody>
             <p>Description: {props.product.description}</p>
-            <p>Price: {props.product.price}</p>
+            <p>Price: {props.product.productPrice}</p>
             <Button
               colorScheme="yellow"
               mr={3}
@@ -84,7 +85,6 @@ export default function CustomModal(props) {
             <Button colorScheme="blue" mr={3} onClick={props.onClose}>
               Close
             </Button>
-            <Button variant="ghost">Secondary Action</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>{" "}
