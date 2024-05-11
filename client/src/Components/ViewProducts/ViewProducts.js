@@ -36,7 +36,7 @@ export default function ViewProducts() {
           <div className="single-product" onClick={() => openModal(product.id)}>
             {" "}
             <h1>{product.productName}</h1>
-            <Image src={product.image} alt="thumbnail" />
+            <Image src={product.image} alt="thumbnail" height={200} />
             <p id="description">{product.description}</p>
             <p id="price">{product.productPrice}</p>
           </div>

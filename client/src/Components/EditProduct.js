@@ -1,5 +1,12 @@
 import React from "react";
-import { Heading, Box, FormLabel, Input, Button } from "@chakra-ui/react";
+import {
+  Heading,
+  Box,
+  FormLabel,
+  Input,
+  Button,
+  Image,
+} from "@chakra-ui/react";
 import { useRef } from "react";
 import axios from "axios";
 import { useToast } from "@chakra-ui/react";
@@ -15,6 +22,8 @@ export default function EditProduct() {
   const productPriceRef = useRef();
   const toast = useToast();
   const [product, setProduct] = useState({});
+  const [image, setImage] = useState("");
+
   //   ========================================EDIT PRODUCT=========================================
   useEffect(() => {
     async function getData() {
@@ -22,6 +31,7 @@ export default function EditProduct() {
       var data = await response.json();
       console.log(data);
       setProduct(data);
+      setImage(data.image);
     }
     getData();
   }, [id]);
@@ -32,7 +42,7 @@ export default function EditProduct() {
       productName: productNameRef.current.value,
       productPrice: parseInt(productPriceRef.current.value),
       description: productDescriptionRef.current.value,
-      //   image: document.getElementById("image").value,
+      image: image,
     };
     axios
       .patch("http://localhost:8080/products/" + id, payload)
@@ -58,22 +68,18 @@ export default function EditProduct() {
 
   // =====================================================
 
-  //   function readFile2(e) {
-  //     let files = e.target.files;
-  //     for (let i = 0; i < files.length; i++) {
-  //       (function (file) {
-  //         var reader = new FileReader(); // Initialize base64 reader
-  //         reader.onload = () => {
-  //           var img = document.createElement("img");
-  //           img.src = reader.result;
-  //           document.getElementById("imagecontainer").appendChild(img);
-  //           document.getElementById("image").value = reader.result; // Link of image in base64 format is stored in input as a string.
-  //           console.log(reader.result);
-  //         };
-  //         reader.readAsDataURL(file); // Convert file to base64 data URL
-  //       })(files[i]);
-  //     }
-  //   }
+  function readFile2(e) {
+    let files = e.target.files;
+    for (let i = 0; i < files.length; i++) {
+      (function (file) {
+        var reader = new FileReader(); // Initialize base64 reader
+        reader.onload = () => {
+          setImage(reader.result);
+        };
+        reader.readAsDataURL(file); // Convert file to base64 data URL
+      })(files[i]);
+    }
+  }
   // ===================================================================
   return (
     <div className="main">
@@ -112,7 +118,9 @@ export default function EditProduct() {
             mb={4}
             ref={productPriceRef}
           />
-          {/* <FormLabel>Upload Image</FormLabel>
+          <Image src={image} alt="productImage" />
+          <br />
+          <FormLabel>Change Image</FormLabel>
           <Input
             type="file"
             name="image"
@@ -120,10 +128,9 @@ export default function EditProduct() {
             mb={4}
             border="none"
             borderBottom="1px solid"
-            // onChange={readFile2}
+            onChange={readFile2}
           />
-          <div id="imagecontainer"></div>
-          <input type="text" id="image" hidden /> */}
+
           <Button type="submit" backgroundColor="teal">
             Submit
           </Button>

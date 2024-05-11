@@ -15,6 +15,7 @@ import {
   Button,
   Flex,
   Text,
+  Image,
 } from "@chakra-ui/react";
 export default function CustomModal(props) {
   var navigate = useNavigate();
@@ -57,8 +58,15 @@ export default function CustomModal(props) {
           <ModalHeader>{props.product.productName}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
+            <Image
+              src={props.product.image}
+              alt="thumbnail"
+              borderRadius={10}
+            />
+            <br />
             <p>Description: {props.product.description}</p>
             <p>Price: {props.product.productPrice}</p>
+            <br />
             <Button
               colorScheme="yellow"
               mr={3}

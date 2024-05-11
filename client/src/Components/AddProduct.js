@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Heading, Box, FormLabel, Input, Button } from "@chakra-ui/react";
 import { useRef } from "react";
 import axios from "axios";
@@ -9,13 +9,15 @@ export default function AddProduct() {
   const productDescriptionRef = useRef();
   const productPriceRef = useRef();
   const toast = useToast();
+  const [image, setImage] = useState([]);
+
   const addProduct = (e) => {
     e.preventDefault();
     const payload = {
       productName: productNameRef.current.value,
       productPrice: parseInt(productPriceRef.current.value),
       description: productDescriptionRef.current.value,
-      image: document.getElementById("image").value,
+      image: image,
     };
     axios
       .post("http://localhost:8080/products", payload)
@@ -29,6 +31,7 @@ export default function AddProduct() {
         });
       })
       .catch((e) => {
+        console.log(e);
         toast({
           title: "Action Failed.",
           description: "Something went wrong.",
@@ -47,12 +50,7 @@ export default function AddProduct() {
       (function (file) {
         var reader = new FileReader(); // Initialize base64 reader
         reader.onload = () => {
-          // If the file is an image
-          var img = document.createElement("img");
-          img.src = reader.result;
-          document.getElementById("imagecontainer").appendChild(img);
-          document.getElementById("image").value = reader.result; // Link of image in base64 format is stored in input as a string.
-          console.log(reader.result);
+          setImage((prev) => [...prev, reader.result]);
         };
         reader.readAsDataURL(file); // Convert file to base64 data URL
       })(files[i]);
@@ -70,7 +68,6 @@ export default function AddProduct() {
         p={10}
         borderRadius={10}
         border={"2px solid white"}
-        
       >
         <form onSubmit={addProduct}>
           <FormLabel>Product Name!</FormLabel>
@@ -106,9 +103,17 @@ export default function AddProduct() {
             border="none"
             borderBottom="1px solid"
             onChange={readFile2}
+            multiple
           />
-          <div id="imagecontainer"></div>
-          <input type="text" id="image" hidden />
+          <div id="imagecontainer">
+            {image.length > 0 && (
+              <>
+                {image.map((item) => {
+                  return <img src={item} alt="product" />;
+                })}
+              </>
+            )}
+          </div>
           <Button type="submit" backgroundColor="teal">
             Submit
           </Button>
