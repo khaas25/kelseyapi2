@@ -5,16 +5,62 @@ import ViewProducts from "./Components/ViewProducts/ViewProducts";
 import AddCustomer from "./Components/AddCustomer";
 import ViewCustomers from "./Components/ViewCustomers/ViewCustomers";
 import EditProduct from "./Components/EditProduct";
+import Practice from "./Components/Practice";
+import Practice2 from "./Components/Practice2";
+import ViewUsers from "./Components/Users/ViewUsers";
+import AllPokemon from "./Components/Pokemon/AllPokemon";
+import PokemonInfo from "./Components/PokemonInfo/PokemonInfo";
+import RandomUser from "./Components/RandomUser/RandomUser";
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
           <Route
+            path="/randomuser"
+            element={
+              <>
+                <RandomUser />
+              </>
+            }
+          />
+          <Route
             path="/"
             element={
               <>
                 <AddProduct />
+              </>
+            }
+          />
+          <Route
+            path="/allpokemon"
+            element={
+              <>
+                <AllPokemon />
+              </>
+            }
+          />
+          <Route
+            path="/singlepokemon"
+            element={
+              <>
+                <PokemonInfo />
+              </>
+            }
+          />
+          <Route
+            path="/users"
+            element={
+              <>
+                <ViewUsers />
+              </>
+            }
+          />
+          <Route
+            path="/practice2"
+            element={
+              <>
+                <Practice2 />
               </>
             }
           />
