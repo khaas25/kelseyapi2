@@ -7,6 +7,8 @@ app.use(cors());
 const Product = require("./Models/Products");
 const Customer = require("./Models/Customers");
 
+require("./DB/Conn")
+
 
 // ===================================================================
 
