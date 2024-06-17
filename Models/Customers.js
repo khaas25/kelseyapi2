@@ -1,5 +1,5 @@
 const { Sequelize, DataTypes } = require("sequelize");
-const sequelize = new Sequelize("mysql://root:12345@localhost/kelseyscript");
+const sequelize = new Sequelize("mysql://root@localhost/kelseyscript");
 const Customer = sequelize.define("Customer", {
   firstName: {
     type: DataTypes.STRING,
