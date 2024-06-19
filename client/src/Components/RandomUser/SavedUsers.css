@@ -1,0 +1,25 @@
+.container {
+  border: 3px solid rgb(68, 67, 67);
+  width: 300px;
+  margin-top: 20px;
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(243, 242, 242, 0.2),
+    0 12px 24px rgba(192, 188, 188, 0.2);
+  text-align: center;
+  transition: transform 0.3s;
+  color: black;
+}
+
+.container:hover {
+  transform: translateY(-10px);
+}
+
+.flexy {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}

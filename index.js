@@ -6,16 +6,44 @@ app.use(express.json({ limit: "10mb" }));
 app.use(cors());
 const Product = require("./Models/Products");
 const Customer = require("./Models/Customers");
+var userInfo = require("./Models/Users");
 
-require("./DB/Conn")
+require("./DB/Conn");
 
+// ===================================================================
+app.post("/saveuser", async (req, res) => {
+  try {
+    const user = await userInfo.create(req.body);
+    res.status(200).send(user);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+// ===================================================================
+// app.get("/saveuser", async (req, res) => {
+//   try {
+//     const allUsers = await userInfo.findAll();
+//     res.status(200).send(allUsers);
+//   } catch (error) {
+//     res.status(500).send(error);
+//   }
+// });
+
+app.get("/saveuser", async (req, res) => {
+  try {
+    const allUsers = await userInfo.find();
+    res.status(200).json(allUsers);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 
 // ===================================================================
 
-// ===================================================================
 app.post("/products", async (req, res) => {
   try {
-    const addProduct = await Product.create(req.body);
+    const addProduct = new Product(req.body);
     res.status(200).send(addProduct);
   } catch (error) {
     res.status(500).send(error);
@@ -24,7 +52,7 @@ app.post("/products", async (req, res) => {
 // =================================================================
 app.get("/products", async (req, res) => {
   try {
-    const allProducts = await Product.findAll();
+    const allProducts = await Product.find();
     res.status(200).send(allProducts);
   } catch (error) {
     res.status(500).send(error);

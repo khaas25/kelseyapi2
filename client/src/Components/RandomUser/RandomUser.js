@@ -11,11 +11,40 @@ export default function RandomUser() {
     });
   };
 
+  //!======================================================
+  const addUser = (user) => {
+    
+    const payload = {
+      userNameTitle: user.name.title,
+      userNameFirst: user.name.first,
+      userNameLast: user.name.last,
+      userEmail: user.email,
+      userPhone: user.phone,
+      userCell: user.cell,
+      userLocationCity: user.location.city,
+      userLocationState: user.location.state,
+      userLocationCountry: user.location.country,
+      userImage: user.picture.large,
+    };
+
+    axios
+      .post("http://localhost:8080/saveuser", payload)
+      .then(() => {
+        alert("User Saved Successfully");
+      })
+      .catch((error) => {
+        console.error("Error saving user:", error);
+        alert("Error saving user");
+      });
+  };
+
+  //!======================================================
+
   return (
     <div>
       <>
         {users.map((user, index) => (
-          <div>
+          <div key={index}>
             <h1>
               {user.name.title} {user.name.first} {user.name.last}
             </h1>
@@ -27,6 +56,7 @@ export default function RandomUser() {
               Location: {user.location.city}, {user.location.state},{" "}
               {user.location.country}
             </p>
+            <button onClick={() => addUser(user)}>Save User</button>
           </div>
         ))}{" "}
         <br />
@@ -34,7 +64,6 @@ export default function RandomUser() {
         <button onClick={getRandomUser}>Generate User</button>
         <br />
         <br />
-        <button>Save User</button>
       </>
     </div>
   );

@@ -11,11 +11,20 @@ import ViewUsers from "./Components/Users/ViewUsers";
 import AllPokemon from "./Components/Pokemon/AllPokemon";
 import PokemonInfo from "./Components/PokemonInfo/PokemonInfo";
 import RandomUser from "./Components/RandomUser/RandomUser";
+import SavedUsers from "./Components/RandomUser/SavedUsers";
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
+          <Route
+            path="/savedusers"
+            element={
+              <>
+                <SavedUsers />
+              </>
+            }
+          />
           <Route
             path="/randomuser"
             element={
