@@ -41,6 +41,22 @@ app.get("/saveuser", async (req, res) => {
 
 // ===================================================================
 
+app.patch("/saveuser/:id", async (req, res) => {
+  try {
+    var _id = req.params.id;
+
+    // === new:true shows the updated value, not the old value====
+    var updateUser = await userInfo.findByIdAndUpdate(_id, req.body, {
+      new: true,
+    });
+    res.status(200).send(updateUser);
+  } catch {
+    res.status(404).send("No user found");
+  }
+});
+
+// ===================================================================
+
 app.post("/products", async (req, res) => {
   try {
     const addProduct = new Product(req.body);
@@ -49,7 +65,7 @@ app.post("/products", async (req, res) => {
     res.status(500).send(error);
   }
 });
-// =================================================================
+// ===================================================================
 app.get("/products", async (req, res) => {
   try {
     const allProducts = await Product.find();
@@ -58,7 +74,38 @@ app.get("/products", async (req, res) => {
     res.status(500).send(error);
   }
 });
-// ===================================================================
+//! ==========Get requests for roles.==================================
+
+app.get("/family", async (req, res) => {
+  try {
+    var familyRole = await userInfo.find({ userRole: "family" });
+    res.status(200).send(familyRole);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+app.get("/friend", async (req, res) => {
+  try {
+    var friendRole = await userInfo.find({
+      userRole: "friend",
+    });
+    res.status(200).send(friendRole);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+app.get("/colleague", async (req, res) => {
+  try {
+    var colleagueRole = await userInfo.find({
+      userRole: "colleague",
+    });
+    res.status(200).send(colleagueRole);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
 
 // ===================================================================
 app.post("/customers", async (req, res) => {

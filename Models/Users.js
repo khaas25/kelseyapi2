@@ -9,6 +9,7 @@ var userSchema = new mongoose.Schema({
   userLocationCity: { type: String, required: false },
   userLocationState: { type: String, required: false },
   userLocationCountry: { type: String, required: false },
+  userRole: { type: String, required: false, default: "" },
   userImage: { type: String, required: false },
 });
 var userInfo = new mongoose.model("userInfo", userSchema);
