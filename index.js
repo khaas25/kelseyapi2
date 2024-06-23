@@ -76,32 +76,43 @@ app.get("/products", async (req, res) => {
 });
 //! ==========Get requests for roles.==================================
 
-app.get("/family", async (req, res) => {
-  try {
-    var familyRole = await userInfo.find({ userRole: "family" });
-    res.status(200).send(familyRole);
-  } catch (error) {
-    res.status(400).send(error);
-  }
-});
+// app.get("/family", async (req, res) => {
+//   try {
+//     var familyRole = await userInfo.find({ userRole: "family" });
+//     res.status(200).send(familyRole);
+//   } catch (error) {
+//     res.status(400).send(error);
+//   }
+// });
 
-app.get("/friend", async (req, res) => {
-  try {
-    var friendRole = await userInfo.find({
-      userRole: "friend",
-    });
-    res.status(200).send(friendRole);
-  } catch (error) {
-    res.status(400).send(error);
-  }
-});
+// app.get("/friend", async (req, res) => {
+//   try {
+//     var friendRole = await userInfo.find({
+//       userRole: "friend",
+//     });
+//     res.status(200).send(friendRole);
+//   } catch (error) {
+//     res.status(400).send(error);
+//   }
+// });
 
-app.get("/colleague", async (req, res) => {
+// app.get("/colleague", async (req, res) => {
+//   try {
+//     var colleagueRole = await userInfo.find({
+//       userRole: "colleague",
+//     });
+//     res.status(200).send(colleagueRole);
+//   } catch (error) {
+//     res.status(400).send(error);
+//   }
+// });
+
+app.get("/:role", async (req, res) => {
+  const role = req.params.role.toLowerCase();
+
   try {
-    var colleagueRole = await userInfo.find({
-      userRole: "colleague",
-    });
-    res.status(200).send(colleagueRole);
+    const users = await userInfo.find({ userRole: role });
+    res.status(200).send(users);
   } catch (error) {
     res.status(400).send(error);
   }

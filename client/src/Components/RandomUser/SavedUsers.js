@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
+import { useReducer } from "react";
 
 import axios from "axios";
 import "./SavedUsers.css";
@@ -15,6 +16,7 @@ export default function SavedUsers() {
 
   //*======================ALL USERS=======================
   const [userEndpoint, setUserEndpoint] = useState("saveuser");
+  const [update, forceUpdate] = useReducer((x) => x + 1, 0);
 
   useEffect(() => {
     var endpoint = userEndpoint;
@@ -22,30 +24,44 @@ export default function SavedUsers() {
       console.log(response);
       setSavedUser(response.data);
     });
-  }, [userEndpoint]);
+  }, [userEndpoint, update]);
   //*====================CHANGING USER ROLE (107?)=================
-
+  const [selectedRole, setSelectedRole] = useState("default");
   const userRoleRefs = useRef({});
 
-  const editUser = (id) => {
+  const editUser = (id, reset = false) => {
     // e.preventDefault();
-    var userRole = userRoleRefs.current[id].value;
 
-    const payload = { userRole: userRole };
+    const payload = { userRole: reset ? "" : selectedRole };
     axios
       .patch(`http://localhost:8080/saveuser/${id}`, payload)
       .then(() => {
         console.log("success");
-        window.location.reload();
+        forceUpdate();
       })
       .catch((e) => {
         console.log(e);
       });
   };
+  //*====================Search Bar=================
+  const searchRef = useRef();
+  function searchUsers() {
+    const value = searchRef.current.value;
+
+    const filterData = savedUser.filter((user) => {
+      const input =
+        `${user.userNameFirst} ${user.userNameLast} ${user.userRole} ${user.userCell}`.toLowerCase();
+      return input.includes(value.toLowerCase());
+    });
+    setSavedUser([...filterData]);
+  }
+  //*====================Search Bar=================
+
   //!======================================================
+
   return (
     <div>
-      <div className="btn-container">
+      {/* <div className="btn-container">
         <center>
           <button
             className="role-btn"
@@ -72,15 +88,37 @@ export default function SavedUsers() {
             Colleague{" "}
           </button>
         </center>
+      </div> */}
+      {/*====================SELECT BAR==================================*/}
+      <div className="selectRoleContainer">
+        {" "}
+        <p>Filter: </p>
+        <select
+          id="selectRole"
+          onChange={(e) => {
+            setUserEndpoint(e.target.value);
+          }}
+        >
+          <option value="saveuser"> All </option>
+          <option value="family">Family</option>
+          <option value="friend">Friend</option>
+          <option value="colleague">Colleague</option>
+        </select>
       </div>
-      {/*====================SEARCH BAR==================================*/}
 
+      {/*====================SELECT BAR==================================*/}
+      {/*====================SEARCH BAR==================================*/}
       <div className="search-container">
         {" "}
-        <input type="text" id="search" placeholder="search users..." />
+        <input
+          type="text"
+          id="search"
+          ref={searchRef}
+          placeholder="search users..."
+          onChange={searchUsers}
+        />
       </div>
       {/*====================MAP THROUGH USERS===========================*/}
-
       <div className="flexy">
         {savedUser.map((singleUser) => (
           <>
@@ -104,7 +142,9 @@ export default function SavedUsers() {
                   {" "}
                   <br />
                   <select
-                    ref={(el) => (userRoleRefs.current[singleUser._id] = el)}
+                    onChange={(e) => {
+                      setSelectedRole(e.target.value);
+                    }}
                   >
                     <option value="default"> --- Choose a Role --- </option>
                     <option value="family">Family</option>
@@ -123,8 +163,7 @@ export default function SavedUsers() {
                   <p>{singleUser.userRole}</p>
                   <button
                     value=""
-                    onClick={() => editUser(singleUser._id)}
-                    ref={(el) => (userRoleRefs.current[singleUser._id] = el)}
+                    onClick={() => editUser(singleUser._id, true)}
                   >
                     Edit Role
                   </button>
@@ -137,12 +176,3 @@ export default function SavedUsers() {
     </div>
   );
 }
-
-//   function searchUsers() {
-//     const value = searchRef.current.value;
-
-//     const filterData = savedUser.filter((user) => {
-//       return user.userNameLast.toLowerCase().includes(value.toLowerCase());
-//     });
-//     setSavedUser([...filterData]);
-//   }
